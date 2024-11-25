@@ -24,7 +24,7 @@ class Grille{
         }
 };
 
-
+// salut
 class jeuDeLaVie{
     private:
         Grille grille;
