@@ -11,7 +11,7 @@ class Grille{
     public:
         int lignes;
         int colonnes;
-        vector<vector<int>> cellules;
+        vector<vector<int>> cellules; //Ca définit une matrice comme sur python si on avait fait cellules = [[0]*colonnes]*lignes
         
         bool VerifierCellulesVivante() {
             for (int i = 0; i < lignes; ++i) {
@@ -30,13 +30,13 @@ class jeuDeLaVie{
         Grille grille;
         
     public:
-        jeuDeLaVie(int lignes, int colonnes) : grille({lignes, colonnes, vector<vector<int>>(lignes, vector<int>(colonnes, 0))}) {} //Mieux étudier pour mieux comprendre pcq je capte pas 
+        jeuDeLaVie(int lignes, int colonnes) : grille({lignes, colonnes, vector<vector<int>>(lignes, vector<int>(colonnes, 0))}) {} //CHAT GPTMieux étudier pour mieux comprendre pcq je capte pas 
         
-        void EtatInitial(vector<pair<int, int>>& cellulesVivantes) { //--> C'est un vecteur de pair qui contient les coordonnées des cellules vivantes
+        void EtatInitial(vector<pair<int, int>>& cellulesVivantes) { //--> C'est un vecteur de pair qui contient les coordonnées des cellules vivantes CHAT GPT
             for (auto& cellule : cellulesVivantes) {
                 int x = cellule.first; //--> x est la première valeur de la pair
                 int y = cellule.second; //--> y est la deuxième valeur de la pair
-                if (x >= 0 && x < grille.lignes && y >= 0 && y < grille.colonnes) {
+                if (x >= 0 && x < grille.lignes && y >= 0 && y < grille.colonnes) { //--> on utilise l'objet grille pour les lignes et colonnes qui sont deja dans la classe Grille
                     grille.cellules[x][y] = 1;
                 }
             }
@@ -100,7 +100,7 @@ class jeuDeLaVie{
 int main() {
     jeuDeLaVie jeu(20, 40);
 
-    vector<pair<int, int>> gliderGun = {
+    vector<pair<int, int>> gliderGun = {                                                            //Chat GPT
         {5, 1}, {5, 2}, {6, 1}, {6, 2},
         {5, 11}, {6, 11}, {7, 11}, {4, 12}, {8, 12}, {3, 13}, {9, 13}, {3, 14}, {9, 14},
         {6, 15}, {4, 16}, {8, 16}, {5, 17}, {6, 17}, {7, 17}, {6, 18},
