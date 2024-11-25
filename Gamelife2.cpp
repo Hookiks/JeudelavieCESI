@@ -3,8 +3,9 @@
 #include <thread>
 #include <chrono>
 #include <utility>
+// #include <thread>
 
-using namespace std;
+using namespace std; //--> Pour éviter de mettre std:: devant chaque fonction
 
 class Grille{
     public:
@@ -24,11 +25,91 @@ class Grille{
         }
 };
 
-// salut
 class jeuDeLaVie{
     private:
         Grille grille;
         
+    public:
+        jeuDeLaVie(int lignes, int colonnes) : grille({lignes, colonnes, vector<vector<int>>(lignes, vector<int>(colonnes, 0))}) {} //Mieux étudier pour mieux comprendre pcq je capte pas 
+        
+        void EtatInitial(vector<pair<int, int>>& cellulesVivantes) { //--> C'est un vecteur de pair qui contient les coordonnées des cellules vivantes
+            for (auto& cellule : cellulesVivantes) {
+                int x = cellule.first; //--> x est la première valeur de la pair
+                int y = cellule.second; //--> y est la deuxième valeur de la pair
+                if (x >= 0 && x < grille.lignes && y >= 0 && y < grille.colonnes) {
+                    grille.cellules[x][y] = 1;
+                }
+            }
+        }
+        
+        void print(){
+            system("cls"); //--> C'est CLS sur windows et sur mac c'est clear au cas ou Amin 
+            for (auto& ligne : grille.cellules) {
+                for (auto& cellule : ligne) {
+                    cout << (cellule ? "O" : " "); //--> O si vivant et " " si mort 
+                    // cout << (cellule ? "1" : "0"); //--> 1 si vivant et 0 si mort
+                }
+                cout << endl;
+            }
+        }
+        
+        void update() {
+            
+            vector<vector<int>> nouvellesCellules = grille.cellules;
+            for (int i = 0; i < grille.lignes; ++i) {
+                for (int j = 0; j < grille.colonnes; ++j) {
+                    int cellulesVivantesVoisines = compterCellulesVivantesVoisines(i, j);
+                    if (grille.cellules[i][j] == 1) {
+                        nouvellesCellules[i][j] = (cellulesVivantesVoisines == 2 || cellulesVivantesVoisines == 3) ? 1 : 0;
+                    } else {
+                        nouvellesCellules[i][j] = (cellulesVivantesVoisines == 3) ? 1 : 0;
+                    }
+                }
+            }
+            grille.cellules = nouvellesCellules;
+        }
+        
+        int compterCellulesVivantesVoisines(int x, int y)  {
+            int count = 0;
+            for (int i = -1; i <= 1; ++i) {
+                for (int j = -1; j <= 1; ++j) {
+                    int nx = x + i;
+                    int ny = y + j;
+                    if (nx >= 0 && nx < grille.lignes && ny >= 0 && ny < grille.colonnes) {
+                        count += grille.cellules[nx][ny];
+                    }
+                }
+            }
+            return count - grille.cellules[x][y];
+        }
 
+        void lancement(int iterations, int delai) {
+            for (int i = 0; i < iterations; ++i) {
+                print();
+                update();
+                if (!grille.VerifierCellulesVivante()) {
+                    cout << "Toutes les cellules sont mortes" << endl;
+                    break;
+                }
+                // this_thread::sleep_for(std::chrono::milliseconds(delai));
+                
+            }
+        }
+};
 
+int main() {
+    jeuDeLaVie jeu(20, 40);
+
+    vector<pair<int, int>> gliderGun = {
+        {5, 1}, {5, 2}, {6, 1}, {6, 2},
+        {5, 11}, {6, 11}, {7, 11}, {4, 12}, {8, 12}, {3, 13}, {9, 13}, {3, 14}, {9, 14},
+        {6, 15}, {4, 16}, {8, 16}, {5, 17}, {6, 17}, {7, 17}, {6, 18},
+        {3, 21}, {4, 21}, {5, 21}, {3, 22}, {4, 22}, {5, 22}, {2, 23}, {6, 23},
+        {1, 25}, {2, 25}, {6, 25}, {7, 25},
+        {3, 35}, {4, 35}, {3, 36}, {4, 36}
+    };
+
+    jeu.EtatInitial(gliderGun);
+    jeu.lancement(500, 600);
+    return 0;
 };
