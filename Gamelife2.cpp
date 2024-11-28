@@ -98,9 +98,9 @@ class jeuDeLaVie{
 };
 
 int main() {
-    jeuDeLaVie jeu(20, 40);
+    jeuDeLaVie jeu(1000, 1000);
 
-    vector<pair<int, int>> gliderGun = {                                                            //Chat GPT
+    vector<pair<int, int>> test = {                                                            //Chat GPT
         {5, 1}, {5, 2}, {6, 1}, {6, 2},
         {5, 11}, {6, 11}, {7, 11}, {4, 12}, {8, 12}, {3, 13}, {9, 13}, {3, 14}, {9, 14},
         {6, 15}, {4, 16}, {8, 16}, {5, 17}, {6, 17}, {7, 17}, {6, 18},
@@ -109,7 +109,23 @@ int main() {
         {3, 35}, {4, 35}, {3, 36}, {4, 36}
     };
 
-    jeu.EtatInitial(gliderGun);
+    jeu.EtatInitial(test);
     jeu.lancement(500, 600);
     return 0;
 };
+
+// int main() {
+//     jeuDeLaVie jeu(50, 50); // Grille de taille 1000x1000
+
+//     // Coordonnées des cellules vivantes
+//     vector<pair<int, int>> cellulesVivantes = {
+//         {495, 500}, {495, 501}, {495, 502}, {496, 500}, {497, 500},   // Motif en haut
+//         {500, 495}, {501, 495}, {502, 495}, {502, 496}, {502, 497},   // Motif à gauche
+//         {505, 500}, {505, 501}, {505, 502}, {504, 502}, {503, 502},   // Motif en bas
+//         {500, 505}, {501, 505}, {502, 505}, {502, 504}, {502, 503}    // Motif à droite
+//     };
+
+//     jeu.EtatInitial(cellulesVivantes); // Initialisation des cellules vivantes
+//     jeu.lancement(10000, 50); // Lancement du jeu avec 10 000 itérations et un délai de 50 ms
+//     return 0;
+// };
