@@ -10,7 +10,7 @@ class grille():
         for i in range(self.x):
             for j in range(self.y):
                 print(self.grille[i][j])
-            print("\n")
+            # print("\n")
 
     def vivant(self, x, y):
         if self.grille[x][y] == 1:

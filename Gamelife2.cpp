@@ -5,7 +5,7 @@
 #include <utility>
 // #include <thread>
 
-using namespace std; //--> Pour éviter de mettre std:: devant chaque fonction
+using namespace std; 
 
 class Grille{
     public:
@@ -97,32 +97,49 @@ class jeuDeLaVie{
         }
 };
 
-int main() {
-    jeuDeLaVie jeu(1000, 1000);
 
-    vector<pair<int, int>> test = {                                                            //Chat GPT
-        {5, 1}, {5, 2}, {6, 1}, {6, 2},
-        {5, 11}, {6, 11}, {7, 11}, {4, 12}, {8, 12}, {3, 13}, {9, 13}, {3, 14}, {9, 14},
-        {6, 15}, {4, 16}, {8, 16}, {5, 17}, {6, 17}, {7, 17}, {6, 18},
-        {3, 21}, {4, 21}, {5, 21}, {3, 22}, {4, 22}, {5, 22}, {2, 23}, {6, 23},
-        {1, 25}, {2, 25}, {6, 25}, {7, 25},
-        {3, 35}, {4, 35}, {3, 36}, {4, 36}
+int main() {
+    jeuDeLaVie jeu(20, 20); // Grille de taille 20x20
+
+    // Coordonnées des cellules vivantes
+    vector<pair<int, int>> cellulesVivantes = {
+        {4, 5}, {4, 6}, {4, 7}, {5, 5}, {6, 5},   
+        {8, 2}, {8, 3}, {8, 4}, {9, 4}, {10, 4},
+        {12, 5}, {12, 6}, {12, 7}, {11, 7}, {10, 7}, 
+        {8, 8}, {8, 9}, {8, 10}, {7, 10}, {6, 10}  
     };
 
-    jeu.EtatInitial(test);
-    jeu.lancement(500, 600);
+    jeu.EtatInitial(cellulesVivantes); // Initialisation des cellules vivantes
+    jeu.lancement(500, 10000); // Lancement du jeu avec 500 itérations et un délai de 600 ms
     return 0;
 };
 
 // int main() {
-//     jeuDeLaVie jeu(50, 50); // Grille de taille 1000x1000
+//     jeuDeLaVie jeu(1000, 1000);
+
+//     vector<pair<int, int>> test = {                                                            //Chat GPT
+//         {5, 1}, {5, 2}, {6, 1}, {6, 2},
+//         {5, 11}, {6, 11}, {7, 11}, {4, 12}, {8, 12}, {3, 13}, {9, 13}, {3, 14}, {9, 14},
+//         {6, 15}, {4, 16}, {8, 16}, {5, 17}, {6, 17}, {7, 17}, {6, 18},
+//         {3, 21}, {4, 21}, {5, 21}, {3, 22}, {4, 22}, {5, 22}, {2, 23}, {6, 23},
+//         {1, 25}, {2, 25}, {6, 25}, {7, 25},
+//         {3, 35}, {4, 35}, {3, 36}, {4, 36}
+//     };
+
+//     jeu.EtatInitial(test);
+//     jeu.lancement(500, 600);
+//     return 0;
+// };
+
+// int main() {
+//     jeuDeLaVie jeu(50, 50); 
 
 //     // Coordonnées des cellules vivantes
 //     vector<pair<int, int>> cellulesVivantes = {
-//         {495, 500}, {495, 501}, {495, 502}, {496, 500}, {497, 500},   // Motif en haut
-//         {500, 495}, {501, 495}, {502, 495}, {502, 496}, {502, 497},   // Motif à gauche
-//         {505, 500}, {505, 501}, {505, 502}, {504, 502}, {503, 502},   // Motif en bas
-//         {500, 505}, {501, 505}, {502, 505}, {502, 504}, {502, 503}    // Motif à droite
+//         {495, 500}, {495, 501}, {495, 502}, {496, 500}, {497, 500},   
+//         {500, 495}, {501, 495}, {502, 495}, {502, 496}, {502, 497},   
+//         {505, 500}, {505, 501}, {505, 502}, {504, 502}, {503, 502},   
+//         {500, 505}, {501, 505}, {502, 505}, {502, 504}, {502, 503}    
 //     };
 
 //     jeu.EtatInitial(cellulesVivantes); // Initialisation des cellules vivantes
