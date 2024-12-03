@@ -3,7 +3,7 @@
 #include <thread>
 #include <chrono>
 #include <utility>
-// #include <thread>
+#
 
 using namespace std; 
 
@@ -68,7 +68,7 @@ class jeuDeLaVie{
             }
             grille.cellules = nouvellesCellules;
         }
-        
+
         int compterCellulesVivantesVoisines(int x, int y)  {
             int count = 0;
             for (int i = -1; i <= 1; ++i) {
