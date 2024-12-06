@@ -3,7 +3,7 @@
 #include <thread>
 #include <chrono>
 #include <utility>
-// #include <thread>
+#
 
 using namespace std; 
 
@@ -46,8 +46,8 @@ class jeuDeLaVie{
             system("cls"); //--> C'est CLS sur windows et sur mac c'est clear au cas ou Amin 
             for (auto& ligne : grille.cellules) {
                 for (auto& cellule : ligne) {
-                    cout << (cellule ? "O" : " "); //--> O si vivant et " " si mort 
-                    // cout << (cellule ? "1" : "0"); //--> 1 si vivant et 0 si mort
+                    // cout << (cellule ? "O" : " "); //--> O si vivant et " " si mort 
+                    cout << (cellule ? "1" : "0"); //--> 1 si vivant et 0 si mort
                 }
                 cout << endl;
             }
@@ -68,7 +68,7 @@ class jeuDeLaVie{
             }
             grille.cellules = nouvellesCellules;
         }
-        
+
         int compterCellulesVivantesVoisines(int x, int y)  {
             int count = 0;
             for (int i = -1; i <= 1; ++i) {
