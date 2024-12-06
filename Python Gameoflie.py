@@ -1,48 +1,40 @@
-                #Jeu de la vie#
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
 
-class grille():
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
-        self.grille = [[0 for i in range(x)] for j in range(y)]
+class GameOfLife:
+    ON = 255
+    OFF = 0
+    vals = [ON, OFF]
 
-    def afficher(self):
-        for i in range(self.x):
-            for j in range(self.y):
-                print(self.grille[i][j])
-            # print("\n")
+    def __init__(self, N=100, p=[0.2, 0.8]):
+        self.N = N
+        self.grid = np.random.choice(self.vals, N*N, p=p).reshape(N, N)
 
-    def vivant(self, x, y):
-        if self.grille[x][y] == 1:
-            return True
-        return False
-    
-    def mort(self, x, y):
-        if self.grille[x][y] == 0:
-            return True
-        return False
-    
-    def setVivant(self, x, y):
-        self.grille[x][y] = 1
+    def update(self, frameNum, img):
+        newGrid = self.grid.copy()
+        for i in range(self.N):
+            for j in range(self.N):
+                total = int((self.grid[i, (j-1)%self.N] + self.grid[i, (j+1)%self.N] +
+                             self.grid[(i-1)%self.N, j] + self.grid[(i+1)%self.N, j] +
+                             self.grid[(i-1)%self.N, (j-1)%self.N] + self.grid[(i-1)%self.N, (j+1)%self.N] +
+                             self.grid[(i+1)%self.N, (j-1)%self.N] + self.grid[(i+1)%self.N, (j+1)%self.N])/255)
+                if self.grid[i, j] == self.ON:
+                    if (total < 2) or (total > 3):
+                        newGrid[i, j] = self.OFF
+                else:
+                    if total == 3:
+                        newGrid[i, j] = self.ON
+        img.set_data(newGrid)
+        self.grid[:] = newGrid
+        return img
 
-    def setMort(self, x, y):
-        self.grille[x][y] = 0
+    def animate(self):
+        fig, ax = plt.subplots()
+        img = ax.imshow(self.grid, interpolation='nearest')
+        ani = animation.FuncAnimation(fig, self.update, fargs=(img,), frames=10, interval=50, save_count=50)
+        plt.show()
 
-    def nbvoisins(self, x, y):
-        nb = 0
-        for i in range(x-1, x+2):
-            for j in range(y-1, y+2):
-                if i < 0 or j < 0 or i >= self.x or j >= self.y:
-                    nb += 1
-        return nb
-
-grille = grille(10, 10)
-grille.setVivant(0, 0)
-grille.setVivant(0, 1)
-grille.setVivant(0, 2)
-grille.afficher()
-print(grille.nbvoisins(0, 0))
-print(grille.nbvoisins(0, 1))
-print(grille.nbvoisins(0, 2))
-print(grille.nbvoisins(1, 0))
-print(grille.nbvoisins(1, 1))
+if __name__ == "__main__":
+    game = GameOfLife(N=100, p=[0.2, 0.8])
+    game.animate()
